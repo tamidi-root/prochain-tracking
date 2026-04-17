@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.0.1](https://github.com/tamidi-root/prochain-tracking/compare/v1.0.0...v1.0.1) (2026-04-17)
+
+
+### Bug Fixes
+
+* add release please token ([2d0f44a](https://github.com/tamidi-root/prochain-tracking/commit/2d0f44a8b4b94def2506245c611654b6b7b869e9))
+* add release please token ([bd30e90](https://github.com/tamidi-root/prochain-tracking/commit/bd30e905978f0c4841c5c0a5f4d74256c39a5a9e))
+
 ## 1.0.0 (2026-04-17)
 
 

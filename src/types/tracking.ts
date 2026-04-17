@@ -58,6 +58,15 @@ export interface ProductDetailObject {
     order?: number;
 }
 
+export interface EntityDetailObject {
+    uuid: string;
+    entity: string;
+    name: string;
+    value?: string;
+    value_type?: ValueType;
+    order?: number;
+}
+
 export interface ProductPropertyObject {
     uuid: string;
     product_id: string;

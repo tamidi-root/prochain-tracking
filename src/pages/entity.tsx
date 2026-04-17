@@ -6,11 +6,12 @@ import {BadgeCheck} from "lucide-react";
 import {ImageWithFallback} from "../components/image-with-fallback";
 import {RichText} from "../components/rich-text";
 import {Spinner} from "../components/spinner";
+import {ValueTypeDisplay} from "../components/value-type-display";
 import {useBreakpoints} from "../hooks/use-breakpoints";
-import {getEntitySelf} from "../lib/api";
+import {getEntityDetails, getEntitySelf} from "../lib/api";
 import {getEntityPeerUrlRpc} from "../lib/on-chain";
-import type {EntityProfileObject} from "../types/tracking";
-import {isRichTextEmpty} from "../utils/data";
+import type {EntityDetailObject, EntityProfileObject} from "../types/tracking";
+import {capitalize, isRichTextEmpty} from "../utils/data";
 
 import {ProfileFooter, SectionWrapper} from "./tracking/shared";
 
@@ -19,6 +20,7 @@ export default function EntityPage() {
   const entityId = uuid || "";
   const {mini} = useBreakpoints();
   const [entity, setEntity] = useState<EntityProfileObject | null>();
+  const [entityDetails, setEntityDetails] = useState<EntityDetailObject[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -38,13 +40,19 @@ export default function EntityPage() {
         if (!peerUrl) {
           if (active) {
             setEntity(null);
+            setLoading(false);
           }
           return;
         }
 
-        const response = await getEntitySelf(peerUrl);
+        const [entityData, details] = await Promise.all([
+          getEntitySelf(peerUrl),
+          getEntityDetails(peerUrl, entityId),
+        ]);
+
         if (active) {
-          setEntity(response);
+          setEntity(entityData);
+          setEntityDetails([...details].sort((a, b) => (a.order || 0) - (b.order || 0)));
         }
       } catch (error) {
         console.error("Failed to fetch entity profile", error);
@@ -67,14 +75,8 @@ export default function EntityPage() {
   if (loading) {
     return (
       <div className="landing-page" style={{width: "100%"}}>
-        <div
-          className="landing-page-content"
-          style={{minHeight: "100vh", justifyContent: "center"}}
-        >
-          <div
-            className="flex flex-col items-center justify-center"
-            style={{gap: 21}}
-          >
+        <div className="landing-page-content" style={{minHeight: "100vh", justifyContent: "center"}}>
+          <div className="flex flex-col items-center justify-center" style={{gap: 21}}>
             <Spinner size={60} />
             <span style={{fontSize: 14, color: "var(--lp-text-muted)"}}>
               <Tlt template="Retrieving entity..." />
@@ -88,18 +90,9 @@ export default function EntityPage() {
   if (!entity) {
     return (
       <div className="landing-page" style={{width: "100%"}}>
-        <div
-          className="landing-page-content"
-          style={{minHeight: "100vh", justifyContent: "center"}}
-        >
-          <div
-            className="flex flex-col items-center justify-center"
-            style={{gap: 21, padding: 24}}
-          >
-            <span
-              className="font-bold"
-              style={{fontSize: 24, color: "var(--lp-text-heading)"}}
-            >
+        <div className="landing-page-content" style={{minHeight: "100vh", justifyContent: "center"}}>
+          <div className="flex flex-col items-center justify-center" style={{gap: 21, padding: 24}}>
+            <span className="font-bold" style={{fontSize: 24, color: "var(--lp-text-heading)"}}>
               <Tlt template="Entity Not Found" />
             </span>
             <span style={{fontSize: 14, color: "var(--lp-text-muted)"}}>
@@ -117,13 +110,29 @@ export default function EntityPage() {
   return (
     <div className="landing-page" style={{width: "100%"}}>
       <div className="landing-page-content" style={{minHeight: "100vh"}}>
+        {/* Banner image */}
+        {entity.banner_image && (
+          <div
+            style={{
+              width: "100%",
+              boxSizing: "border-box",
+              padding: mini ? "0 24px" : "0 max(40px, calc((100% - 1120px) / 2 + 40px))",
+            }}
+          >
+            <div style={{borderRadius: 16, overflow: "hidden"}}>
+              <img
+                src={entity.banner_image}
+                style={{width: "100%", maxHeight: 300, objectFit: "cover", display: "block"}}
+                alt="banner"
+              />
+            </div>
+          </div>
+        )}
+
+        {/* Entity header */}
         <SectionWrapper
           mini={mini}
-          padding={
-            mini
-              ? "32px 24px"
-              : "40px max(40px, calc((100% - 1120px) / 2 + 40px))"
-          }
+          padding={mini ? "32px 24px" : "40px max(40px, calc((100% - 1120px) / 2 + 40px))"}
         >
           <div
             className={`flex ${mini ? "flex-col" : "flex-row"} items-start`}
@@ -142,31 +151,17 @@ export default function EntityPage() {
             />
             <div className="flex flex-col flex-1" style={{gap: 14}}>
               <div className="flex flex-col" style={{gap: 6}}>
-                <span
-                  className="font-bold"
-                  style={{
-                    fontSize: mini ? 28 : 36,
-                    color: "var(--lp-text-heading)",
-                  }}
-                >
+                <span className="font-bold" style={{fontSize: mini ? 28 : 36, color: "var(--lp-text-heading)"}}>
                   {entity.name}
                 </span>
                 {!!entity.address && (
-                  <span style={{fontSize: 14, color: "var(--lp-text-muted)"}}>
-                    {entity.address}
-                  </span>
+                  <span style={{fontSize: 14, color: "var(--lp-text-muted)"}}>{entity.address}</span>
                 )}
               </div>
               {entity.on_chain && (
                 <div className="flex flex-row items-center" style={{gap: 8}}>
                   <BadgeCheck size={16} style={{color: "var(--lp-brand)"}} />
-                  <span
-                    style={{
-                      fontSize: 14,
-                      fontWeight: 600,
-                      color: "var(--lp-text-heading)",
-                    }}
-                  >
+                  <span style={{fontSize: 14, fontWeight: 600, color: "var(--lp-text-heading)"}}>
                     <Tlt template="On-chain verified" />
                   </span>
                 </div>
@@ -202,50 +197,103 @@ export default function EntityPage() {
           </div>
         </SectionWrapper>
 
+        {/* Entity details */}
+        {entityDetails.length > 0 && (
+          <SectionWrapper mini={mini}>
+            <div
+              className="flex flex-col"
+              style={{
+                borderRadius: 16,
+                background: "var(--lp-glass-bg)",
+                border: "1px solid var(--lp-glass-border)",
+                overflow: "hidden",
+              }}
+            >
+              {entityDetails.map((detail, i) => (
+                <div
+                  key={detail.uuid}
+                  className={`flex ${mini ? "flex-col" : "flex-row"} items-start`}
+                  style={{
+                    gap: mini ? 4 : 13,
+                    padding: mini ? "16px 20px" : "14px 24px",
+                    ...(i > 0 && {borderTop: "1px solid var(--lp-glass-border)"}),
+                  }}
+                >
+                  <span
+                    className="font-medium"
+                    style={{
+                      fontSize: 13,
+                      paddingBlock: mini ? 0 : 7,
+                      minWidth: mini ? 0 : 200,
+                      color: "var(--lp-text-muted)",
+                    }}
+                  >
+                    {capitalize(detail.name)}
+                  </span>
+                  <div className="flex-1" style={{color: "var(--lp-text)", paddingBlock: mini ? 0 : 7}}>
+                    <ValueTypeDisplay valueType={detail.value_type} value={detail.value} />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </SectionWrapper>
+        )}
+
+        {/* Featured products */}
         {!!entity.featured_products_expanded?.length && (
           <SectionWrapper mini={mini}>
             <div className="flex flex-col" style={{gap: 16}}>
-              <span
-                className="font-bold"
-                style={{fontSize: 20, color: "var(--lp-text-heading)"}}
-              >
-                <Tlt template="Featured products" />
-              </span>
-              <div className="flex flex-wrap" style={{gap: 16}}>
+              <div className="flex flex-row items-center justify-between" style={{gap: 13}}>
+                <span className="font-bold" style={{fontSize: 20, color: "var(--lp-text-heading)"}}>
+                  <Tlt template="Featured products" />
+                </span>
+                <Link
+                  to={`/e/${entityId}/products`}
+                  className="button compact"
+                  style={{display: "inline-flex", alignItems: "center", gap: 6}}
+                >
+                  <Tlt template="All Products" />
+                </Link>
+              </div>
+              <div style={{margin: mini ? -8 : -10, display: "flex", flexWrap: "wrap"}}>
                 {entity.featured_products_expanded.map((product) => (
-                  <div
+                  <Link
                     key={product.uuid}
-                    className="flex flex-col"
+                    to={`/e/${entityId}/products/${product.uuid}`}
                     style={{
-                      width: mini ? "100%" : "calc(33.333% - 11px)",
-                      minWidth: mini ? "100%" : 240,
-                      padding: 16,
-                      borderRadius: 18,
-                      background: "var(--lp-glass-bg)",
-                      border: "1px solid var(--lp-glass-border)",
-                      gap: 12,
+                      padding: mini ? 8 : 10,
+                      width: mini ? "50%" : 200,
+                      boxSizing: "border-box",
+                      textDecoration: "none",
+                      display: "block",
                     }}
                   >
-                    <ImageWithFallback
-                      uri={product.photo_url}
-                      style={{borderRadius: 14, aspectRatio: "1 / 1"}}
-                    />
-                    <div className="flex flex-col" style={{gap: 4}}>
-                      <span
-                        className="font-semibold"
-                        style={{color: "var(--lp-text-heading)"}}
-                      >
-                        {product.name}
-                      </span>
-                      {!!product.unit && (
-                        <span
-                          style={{fontSize: 13, color: "var(--lp-text-muted)"}}
-                        >
-                          {product.unit}
+                    <div
+                      style={{
+                        borderRadius: 16,
+                        overflow: "hidden",
+                        background: "var(--lp-glass-bg)",
+                        border: "1px solid var(--lp-glass-border)",
+                        height: "100%",
+                      }}
+                    >
+                      <div className="flex items-center justify-center" style={{width: "100%", backgroundColor: "#ffffff"}}>
+                        <ImageWithFallback
+                          uri={product.photo_url}
+                          width={mini ? 150 : 180}
+                          style={{borderRadius: 0}}
+                        />
+                      </div>
+                      <div style={{padding: mini ? 12 : 16}}>
+                        <span className="font-medium" style={{fontSize: 13, color: "var(--lp-text)"}}>
+                          {product.name}
                         </span>
-                      )}
+                        {!!product.unit && (
+                          <div style={{fontSize: 12, color: "var(--lp-text-muted)", marginTop: 4}}>{product.unit}</div>
+                        )}
+                      </div>
                     </div>
-                  </div>
+                  </Link>
                 ))}
               </div>
             </div>
@@ -253,7 +301,6 @@ export default function EntityPage() {
         )}
 
         <div style={{flex: 1}} />
-
         <ProfileFooter mini={mini} />
       </div>
     </div>

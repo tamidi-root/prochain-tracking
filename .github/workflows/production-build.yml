@@ -1,0 +1,14 @@
+name: production-build
+
+on:
+  release:
+    types:
+      - published
+  workflow_dispatch:
+
+jobs:
+  build:
+    uses: ./.github/workflows/_build.yml
+    with:
+      build_script: build-production
+      artifact_name: production-build-tracking-web

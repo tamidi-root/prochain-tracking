@@ -1,0 +1,40 @@
+{
+    "name": "tracking-web",
+    "private": true,
+    "version": "0.1.0",
+    "type": "module",
+    "scripts": {
+        "start": "vite",
+        "build-staging": "tsc -b && vite build --mode staging",
+        "build-production": "tsc -b && vite build --mode production",
+        "lint": "eslint .",
+        "preview": "vite preview",
+        "i18n": "tlt-extract-react --input-dir=./src --output-dir=./src/assets/translations --default-lang=en --langs=vi,en"
+    },
+    "dependencies": {
+        "@clairejs/client": "3.5.8",
+        "@clairejs/core": "3.9.6",
+        "@clairejs/react": "3.5.4",
+        "@clairejs/react-web": "1.1.9",
+        "ethers": "^6.15.0",
+        "lucide-react": "^0.577.0",
+        "react": "19.1.0",
+        "react-dom": "19.1.0"
+    },
+    "devDependencies": {
+        "@eslint/js": "^9.39.4",
+        "@types/node": "^24.12.0",
+        "@types/react": "^19.2.14",
+        "@types/react-dom": "^19.2.3",
+        "@vitejs/plugin-react": "^6.0.1",
+        "eslint": "^9.39.4",
+        "eslint-plugin-react-hooks": "^7.0.1",
+        "eslint-plugin-react-refresh": "^0.5.2",
+        "globals": "^17.4.0",
+        "prettier": "^3.8.3",
+        "typescript": "~5.9.3",
+        "typescript-eslint": "^8.57.0",
+        "vite": "^8.0.1"
+    },
+    "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
+}

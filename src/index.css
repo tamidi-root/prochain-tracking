@@ -1,0 +1,344 @@
+:root {
+    --lp-bg: #f5f7fa;
+    --lp-text: #1a2035;
+    --lp-text-muted: #5a6478;
+    --lp-text-heading: #0d1220;
+    --lp-glass-bg: rgba(255, 255, 255, 0.72);
+    --lp-glass-border: rgba(0, 0, 0, 0.08);
+    --lp-grid-color: rgba(0, 229, 153, 0.05);
+    --lp-blob-color: rgba(0, 229, 153, 0.08);
+    --lp-btn-text: #1a2035;
+    --lp-btn-hover-bg: rgba(0, 0, 0, 0.05);
+    --lp-btn-default-bg: rgba(0, 0, 0, 0.04);
+    --lp-btn-default-border: rgba(0, 0, 0, 0.12);
+    --lp-logo-color: #1a2035;
+    --lp-scrollbar-thumb: rgba(0, 0, 0, 0.18);
+    --lp-color-scheme: light;
+    --lp-link: #0066cc;
+    --lp-brand: #00e599;
+    --lp-brand-secondary: #00d4ff;
+    --lp-backdrop: rgba(8, 12, 18, 0.55);
+}
+
+.dark {
+    --lp-bg: #0d1220;
+    --lp-text: #f0f2f5;
+    --lp-text-muted: #8892a4;
+    --lp-text-heading: #ffffff;
+    --lp-glass-bg: rgba(255, 255, 255, 0.06);
+    --lp-glass-border: rgba(255, 255, 255, 0.1);
+    --lp-grid-color: rgba(0, 229, 153, 0.05);
+    --lp-blob-color: rgba(0, 229, 153, 0.12);
+    --lp-btn-text: #ffffff;
+    --lp-btn-hover-bg: rgba(255, 255, 255, 0.08);
+    --lp-btn-default-bg: rgba(255, 255, 255, 0.06);
+    --lp-btn-default-border: rgba(255, 255, 255, 0.16);
+    --lp-logo-color: #ffffff;
+    --lp-scrollbar-thumb: rgba(255, 255, 255, 0.2);
+    --lp-color-scheme: dark;
+    --lp-link: #53b1fd;
+    --lp-brand: #00e599;
+    --lp-brand-secondary: #00d4ff;
+    --lp-backdrop: rgba(0, 0, 0, 0.7);
+}
+
+html,
+body,
+#root {
+    width: 100%;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-size: 16px;
+    line-height: 1.5;
+    letter-spacing: -0.01em;
+    color: var(--lp-text);
+    background: var(--lp-bg);
+}
+
+button,
+input,
+select,
+textarea {
+    font: inherit;
+}
+
+a {
+    color: var(--lp-link);
+}
+
+button {
+    cursor: pointer;
+}
+
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--lp-scrollbar-thumb);
+    border-radius: 3px;
+}
+
+#root {
+    display: flex;
+    justify-content: center;
+}
+
+.app-shell {
+    width: 100%;
+    min-height: 100vh;
+}
+
+.landing-page {
+    width: 100%;
+    min-height: 100vh;
+    background: var(--lp-bg);
+    color: var(--lp-text);
+    position: relative;
+    overflow-x: hidden;
+    color-scheme: var(--lp-color-scheme);
+}
+
+.landing-page::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background-image:
+        linear-gradient(var(--lp-grid-color) 1px, transparent 1px),
+        linear-gradient(90deg, var(--lp-grid-color) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+}
+
+.landing-page::after {
+    content: "";
+    position: fixed;
+    top: -15%;
+    left: -10%;
+    width: 540px;
+    height: 540px;
+    background: radial-gradient(circle, var(--lp-blob-color) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.landing-page-content {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 36px;
+    padding: 0 14px;
+    border-radius: 999px;
+    border: 1px solid var(--lp-btn-default-border);
+    background: var(--lp-btn-default-bg);
+    color: var(--lp-btn-text);
+    text-decoration: none;
+    transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.button:hover {
+    background: var(--lp-btn-hover-bg);
+}
+
+.button.primary {
+    border-color: transparent;
+    background: linear-gradient(135deg, var(--lp-brand), var(--lp-brand-secondary));
+    color: #08131d;
+    font-weight: 700;
+}
+
+.button.compact {
+    min-height: 30px;
+    padding: 0 10px;
+}
+
+.footer-section {
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.footer-section.mobile {
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.logo-and-name {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo-mark {
+    width: 20px;
+    height: 20px;
+    border-radius: 999px;
+    background: linear-gradient(135deg, var(--lp-brand), var(--lp-brand-secondary));
+}
+
+.product-name {
+    color: var(--lp-logo-color);
+    font-weight: 700;
+}
+
+.copyright {
+    font-size: 13px;
+    color: var(--lp-text-muted);
+}
+
+.modal-backdrop {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    background: var(--lp-backdrop);
+    z-index: 1000;
+}
+
+.modal-card {
+    width: min(100%, 520px);
+    max-height: calc(100vh - 48px);
+    overflow: auto;
+    border-radius: 20px;
+    border: 1px solid var(--lp-glass-border);
+    background: var(--lp-bg);
+    box-shadow: 0 24px 80px rgba(0, 0, 0, 0.28);
+}
+
+.modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 18px 20px 0;
+}
+
+.modal-content {
+    padding: 16px 20px 20px;
+}
+
+.spinner {
+    width: 36px;
+    height: 36px;
+    border-radius: 999px;
+    border: 3px solid rgba(127, 127, 127, 0.18);
+    border-top-color: var(--lp-brand);
+    animation: spin 1s linear infinite;
+}
+
+.rich-text {
+    line-height: 1.6;
+}
+
+.rich-text p:first-child {
+    margin-top: 0;
+}
+
+.rich-text p:last-child {
+    margin-bottom: 0;
+}
+
+.rich-text img,
+.rich-text video,
+.rich-text iframe {
+    max-width: 100%;
+}
+
+.flex {
+    display: flex;
+}
+
+.flex-col {
+    flex-direction: column;
+}
+
+.flex-row {
+    flex-direction: row;
+}
+
+.flex-1 {
+    flex: 1 1 0%;
+}
+
+.flex-wrap {
+    flex-wrap: wrap;
+}
+
+.items-center {
+    align-items: center;
+}
+
+.items-start {
+    align-items: flex-start;
+}
+
+.justify-center {
+    justify-content: center;
+}
+
+.justify-between {
+    justify-content: space-between;
+}
+
+.w-full {
+    width: 100%;
+}
+
+.min-h-screen {
+    min-height: 100vh;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.font-bold {
+    font-weight: 700;
+}
+
+.font-semibold {
+    font-weight: 600;
+}
+
+.font-medium {
+    font-weight: 500;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}

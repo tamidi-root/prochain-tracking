@@ -1,0 +1,71 @@
+name: Deploy Tracking Web
+
+on:
+  workflow_call:
+    inputs:
+      environment_name:
+        description: GitHub environment name
+        required: true
+        type: string
+      artifact_name:
+        description: Name of the artifact to download
+        required: true
+        type: string
+      s3_bucket:
+        description: Destination S3 bucket
+        required: true
+        type: string
+      s3_prefix:
+        description: Destination S3 prefix
+        required: true
+        type: string
+      source_run_id:
+        description: Workflow run id that produced the artifact
+        required: false
+        type: string
+
+permissions:
+  contents: read
+  actions: read
+  id-token: write
+
+jobs:
+  deploy:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-22.04
+    environment: ${{ inputs.environment_name }}
+    concurrency:
+      group: deploy-${{ inputs.environment_name }}
+      cancel-in-progress: true
+    env:
+      AWS_REGION: ${{ vars.AWS_REGION || 'ap-southeast-1' }}
+      DIST_DIR: dist
+      TARGET_S3_URI: s3://${{ inputs.s3_bucket }}/${{ inputs.s3_prefix }}
+
+    steps:
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ inputs.artifact_name }}
+          path: ${{ env.DIST_DIR }}
+          github-token: ${{ github.token }}
+          run-id: ${{ inputs.source_run_id }}
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: ${{ env.AWS_REGION }}
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+
+      - name: Sync static assets
+        run: |
+          aws s3 sync "${DIST_DIR}" "${TARGET_S3_URI}" \
+            --exclude "index.html" \
+            --delete \
+            --cache-control "max-age=31536000"
+
+      - name: Upload index.html with no-cache
+        run: |
+          aws s3 cp "${DIST_DIR}/index.html" "${TARGET_S3_URI}/index.html" \
+            --cache-control "no-cache" \
+            --content-type "text/html"

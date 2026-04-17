@@ -1,0 +1,25 @@
+name: staging-release
+
+on:
+  workflow_run:
+    workflows:
+      - staging-build
+    types:
+      - completed
+  workflow_dispatch:
+    inputs:
+      source_run_id:
+        description: Build workflow run id to deploy. Required for manual runs.
+        required: true
+        type: string
+
+jobs:
+  deploy:
+    uses: ./.github/workflows/_deploy.yml
+    with:
+      environment_name: staging
+      artifact_name: staging-build-tracking-web
+      s3_bucket: staging-prochain
+      s3_prefix: www/tracking-web
+      source_run_id: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.id || inputs.source_run_id }}
+    secrets: inherit

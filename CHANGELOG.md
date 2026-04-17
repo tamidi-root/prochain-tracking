@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.0.2](https://github.com/tamidi-root/prochain-tracking/compare/v1.0.1...v1.0.2) (2026-04-17)
+
+
+### Bug Fixes
+
+* fall back to current run_id when source_run_id is not provided ([840e193](https://github.com/tamidi-root/prochain-tracking/commit/840e193f52c1c3430f9ca212ed51594cf47ef79a))
+* fall back to current run_id when source_run_id is not provided ([28018ce](https://github.com/tamidi-root/prochain-tracking/commit/28018cee9cf85eb96b96c84d7f7d5c47d60e9722))
+* merge workflows ([9d32ae1](https://github.com/tamidi-root/prochain-tracking/commit/9d32ae168f26eeebe85a33810e03d2578187f46c))
+* merge workflows ([f852634](https://github.com/tamidi-root/prochain-tracking/commit/f852634a71f3f3725f7d86518febf8753f46f0a0))
+
 ## [1.0.1](https://github.com/tamidi-root/prochain-tracking/compare/v1.0.0...v1.0.1) (2026-04-17)
 
 

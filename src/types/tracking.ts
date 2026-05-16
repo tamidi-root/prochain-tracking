@@ -13,7 +13,7 @@ export enum ValueType {
 export interface EntityObject {
     uuid: string;
     version?: number;
-    name: string;
+    name?: string;
     description?: string;
     address?: string;
     photo_url?: string;

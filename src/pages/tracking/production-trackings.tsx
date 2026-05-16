@@ -81,7 +81,9 @@ function TrackingIngredient({
                     <span className="font-medium" style={{ fontSize: 14, color: "var(--lp-text)" }}>
                         {product.name}
                     </span>
-                    <span style={{ fontSize: 12, color: "var(--lp-text-muted)" }}>From: {entity.name}</span>
+                    {!!entity.name && (
+                        <span style={{ fontSize: 12, color: "var(--lp-text-muted)" }}>From: {entity.name}</span>
+                    )}
                 </div>
                 {amount != null && (
                     <span className="font-medium" style={{ fontSize: 14, color: "var(--lp-text)" }}>

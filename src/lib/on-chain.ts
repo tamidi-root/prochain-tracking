@@ -10,7 +10,7 @@ const entityAbi = [
 ];
 
 const productionAbi = [
-    "function batchInfo(bytes16 productionUuid) view returns (tuple(address producer, uint256 mintedAt, bytes32 metadataHash))",
+    "function batchInfo(bytes16 productionUuid) view returns (address producer, uint64 producedAt, uint64 expirationDate)",
 ];
 
 export async function getEntityPeerUrlRpc(entityAddress: string): Promise<string | undefined> {
@@ -35,13 +35,16 @@ export async function getEntityPeerUrlRpc(entityAddress: string): Promise<string
     }
 }
 
-export async function discoverProductionInfo(productionUuid: string): Promise<{ entityAddress: string; peerUrl: string } | null> {
+export async function discoverProductionInfo(
+    productionUuid: string,
+): Promise<{ entityAddress: string; peerUrl: string; producedAt: number | null } | null> {
     const provider = new ethers.JsonRpcProvider(config.RPC_URL);
     const contract = new ethers.Contract(config.PRODUCTION_CONTRACT_ADDRESS, productionAbi, provider);
 
     try {
         const info = await contract.batchInfo(uuidToBytes16(productionUuid));
         const producer: string = info.producer;
+        const producedAt = info.producedAt ? Number(info.producedAt) * 1000 : null;
 
         if (!producer || producer === ethers.ZeroAddress) {
             return null;
@@ -55,6 +58,7 @@ export async function discoverProductionInfo(productionUuid: string): Promise<{ 
         return {
             entityAddress: producer,
             peerUrl,
+            producedAt,
         };
     } catch {
         return null;

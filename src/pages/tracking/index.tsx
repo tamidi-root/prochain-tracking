@@ -26,6 +26,9 @@ export default function TrackingPage() {
     useState<GetPublicProductionResponseBody | null>();
   const [loading, setLoading] = useState(true);
   const [referenceTime, setReferenceTime] = useState<number | null>(null);
+  const [onChainProductionDate, setOnChainProductionDate] = useState<
+    number | null
+  >(null);
 
   useEffect(() => {
     let active = true;
@@ -39,6 +42,7 @@ export default function TrackingPage() {
       try {
         setLoading(true);
         setDetails(undefined);
+        setOnChainProductionDate(null);
 
         const info = await discoverProductionInfo(productionId);
         if (!info) {
@@ -52,12 +56,14 @@ export default function TrackingPage() {
         if (active) {
           setDetails(response);
           setReferenceTime(Date.now());
+          setOnChainProductionDate(info.producedAt);
         }
       } catch (error) {
         console.error("Failed to fetch tracking data", error);
         if (active) {
           setDetails(null);
           setReferenceTime(Date.now());
+          setOnChainProductionDate(null);
         }
       } finally {
         if (active) {
@@ -212,6 +218,33 @@ export default function TrackingPage() {
                         >
                           {production.quantity.toLocaleString()}{" "}
                           {product.unit || ""}
+                        </span>
+                      </div>
+                    )}
+                    {!!onChainProductionDate && (
+                      <div
+                        className="flex flex-col"
+                        style={{
+                          padding: "10px 16px",
+                          borderRadius: 12,
+                          background: "var(--lp-glass-bg)",
+                          border: "1px solid var(--lp-glass-border)",
+                          gap: 2,
+                        }}
+                      >
+                        <span
+                          style={{fontSize: 11, color: "var(--lp-text-muted)"}}
+                        >
+                          <Tlt template="Production Date" />
+                        </span>
+                        <span
+                          className="font-semibold"
+                          style={{
+                            fontSize: 16,
+                            color: "var(--lp-text-heading)",
+                          }}
+                        >
+                          {formatDate(onChainProductionDate)}
                         </span>
                       </div>
                     )}

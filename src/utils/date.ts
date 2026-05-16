@@ -1,6 +1,6 @@
-const defaultLocale = navigator.language || "en-US";
+const pad = (value: number) => String(value).padStart(2, "0");
 
-export const formatDate = (value?: number | string | null, locale = defaultLocale) => {
+export const formatDate = (value?: number | string | null) => {
     if (value === undefined || value === null || value === "") {
         return "";
     }
@@ -10,14 +10,10 @@ export const formatDate = (value?: number | string | null, locale = defaultLocal
         return String(value);
     }
 
-    return new Intl.DateTimeFormat(locale, {
-        year: "numeric",
-        month: "2-digit",
-        day: "2-digit",
-    }).format(date);
+    return `${pad(date.getDate())}/${pad(date.getMonth() + 1)}/${date.getFullYear()}`;
 };
 
-export const formatDateTime = (value?: number | string | null, locale = defaultLocale) => {
+export const formatDateTime = (value?: number | string | null) => {
     if (value === undefined || value === null || value === "") {
         return "";
     }
@@ -27,12 +23,5 @@ export const formatDateTime = (value?: number | string | null, locale = defaultL
         return String(value);
     }
 
-    return new Intl.DateTimeFormat(locale, {
-        year: "numeric",
-        month: "2-digit",
-        day: "2-digit",
-        hour: "2-digit",
-        minute: "2-digit",
-        second: "2-digit",
-    }).format(date);
+    return `${formatDate(value)} ${pad(date.getHours())}:${pad(date.getMinutes())}:${pad(date.getSeconds())}`;
 };

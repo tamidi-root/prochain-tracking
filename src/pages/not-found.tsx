@@ -34,7 +34,7 @@ export default function NotFoundPage() {
               maxWidth: 420,
             }}
           >
-            <Tlt template="No batch matches that code. Check it against the label and try again." />
+            <Tlt template="No batch matches that code." />
           </span>
         </div>
       </div>

@@ -7,6 +7,7 @@ import {useBreakpoints} from "../../hooks/use-breakpoints";
 import {getPublicProduction} from "../../lib/api";
 import {discoverProductionInfo} from "../../lib/on-chain";
 import type {GetPublicProductionResponseBody} from "../../types/tracking";
+import {formatPublicCode} from "../../utils/public-code";
 import {formatDate} from "../../utils/date";
 
 import {CultivationData} from "./cultivation-data";
@@ -132,6 +133,7 @@ export default function TrackingPage() {
   const product = details?.relatedProducts?.find(
     (item) => item.uuid === production?.product_id,
   );
+  const lotCode = formatPublicCode(entity?.short_name, production?.readable_id);
   const isExpired = !!(
     production?.expiration_date &&
     referenceTime &&
@@ -193,6 +195,39 @@ export default function TrackingPage() {
                 <TrackingName product={product} />
                 {production && (
                   <div className="flex flex-row flex-wrap" style={{gap: 12}}>
+                    {/*-- The code a consumer types on the partner site to reach this page, composed
+                          from data this page already fetched rather than taken from the URL: a
+                          query parameter would be attacker-controlled, and a provenance label
+                          beside chain-verified data is exactly what must not be spoofable. */}
+                    {!!lotCode && (
+                      <div
+                        className="flex flex-col"
+                        style={{
+                          padding: "10px 16px",
+                          borderRadius: 12,
+                          background: "var(--lp-glass-bg)",
+                          border: "1px solid var(--lp-glass-border)",
+                          gap: 2,
+                        }}
+                      >
+                        <span
+                          style={{fontSize: 11, color: "var(--lp-text-muted)"}}
+                        >
+                          <Tlt template="Batch Code" />
+                        </span>
+                        <span
+                          className="font-semibold"
+                          style={{
+                            fontSize: 16,
+                            color: "var(--lp-text-heading)",
+                            fontFamily: "ui-monospace, SFMono-Regular, Menlo, monospace",
+                            letterSpacing: "0.02em",
+                          }}
+                        >
+                          {lotCode}
+                        </span>
+                      </div>
+                    )}
                     {production.quantity != null && (
                       <div
                         className="flex flex-col"

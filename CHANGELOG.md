@@ -1,5 +1,20 @@
 # Changelog
 
+## [1.1.0](https://github.com/tamidi-root/prochain-tracking/compare/v1.0.2...v1.1.0) (2026-09-20)
+
+
+### Features
+
+* hide supplier name ([41ea354](https://github.com/tamidi-root/prochain-tracking/commit/41ea35434b7f6b865f107edee646143540eaf038))
+* show production date ([61f1fae](https://github.com/tamidi-root/prochain-tracking/commit/61f1fae8efd99ff02901928e90f4bfe2b1f789af))
+* show the batch code and handle unresolvable codes ([e45e3e6](https://github.com/tamidi-root/prochain-tracking/commit/e45e3e6c3e4014c02eb9c85098e0c45aada6d425))
+* **ui:** handle supplier name redaction & show production date ([eee402c](https://github.com/tamidi-root/prochain-tracking/commit/eee402cdcd04296660e98e144139fa22c10407e7))
+
+
+### Bug Fixes
+
+* shorten the batch-not-found message ([0986d1f](https://github.com/tamidi-root/prochain-tracking/commit/0986d1fead202f1df013a65469831b0c45a76959))
+
 ## [1.0.2](https://github.com/tamidi-root/prochain-tracking/compare/v1.0.1...v1.0.2) (2026-04-17)
 
 

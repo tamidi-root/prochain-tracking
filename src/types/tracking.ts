@@ -14,6 +14,9 @@ export interface EntityObject {
     uuid: string;
     version?: number;
     name?: string;
+    //-- Half of the public tracking code `{short_name}.{readable_id}`. Served by the peer already;
+    //-- this interface is maintained by hand and simply had not declared it.
+    short_name?: string;
     description?: string;
     address?: string;
     photo_url?: string;

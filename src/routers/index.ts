@@ -12,6 +12,7 @@ const TrackingPage = lazy(importDelay(import("../pages/tracking")));
 const EntityPage = lazy(importDelay(import("../pages/entity")));
 const EntityProductsPage = lazy(importDelay(import("../pages/entity-products")));
 const EntityProductPage = lazy(importDelay(import("../pages/entity-product")));
+const NotFoundPage = lazy(importDelay(import("../pages/not-found")));
 
 const routes: RouterConfig = {
   path: "",
@@ -21,6 +22,8 @@ const routes: RouterConfig = {
     {path: "e/:uuid", component: {view: EntityPage}},
     {path: "e/:uuid/products", component: {view: EntityProductsPage}},
     {path: "e/:uuid/products/:productUuid", component: {view: EntityProductPage}},
+    //-- Where the backend code resolver redirects when a code matches no lot.
+    {path: "not-found", component: {view: NotFoundPage}},
   ],
 };
 

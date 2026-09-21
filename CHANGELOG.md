@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.2.0](https://github.com/tamidi-root/prochain-tracking/compare/v1.1.0...v1.2.0) (2026-09-21)
+
+
+### Features
+
+* add the error page for an ambiguous batch code ([cc04ad7](https://github.com/tamidi-root/prochain-tracking/commit/cc04ad766b67711693b344dd9db81bc4e89b176d))
+* add the error page for an ambiguous batch code ([9fa3265](https://github.com/tamidi-root/prochain-tracking/commit/9fa32650df1402360e36bc359c38c26727a4b374))
+
 ## [1.1.0](https://github.com/tamidi-root/prochain-tracking/compare/v1.0.2...v1.1.0) (2026-09-20)
 
 

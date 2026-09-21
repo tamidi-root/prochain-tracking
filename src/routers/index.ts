@@ -13,6 +13,7 @@ const EntityPage = lazy(importDelay(import("../pages/entity")));
 const EntityProductsPage = lazy(importDelay(import("../pages/entity-products")));
 const EntityProductPage = lazy(importDelay(import("../pages/entity-product")));
 const NotFoundPage = lazy(importDelay(import("../pages/not-found")));
+const ErrorPage = lazy(importDelay(import("../pages/error")));
 
 const routes: RouterConfig = {
   path: "",
@@ -24,6 +25,8 @@ const routes: RouterConfig = {
     {path: "e/:uuid/products/:productUuid", component: {view: EntityProductPage}},
     //-- Where the backend code resolver redirects when a code matches no lot.
     {path: "not-found", component: {view: NotFoundPage}},
+    //-- ...and where it redirects when a code matches more than one.
+    {path: "error", component: {view: ErrorPage}},
   ],
 };
 

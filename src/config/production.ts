@@ -5,6 +5,7 @@ const config: TrackingConfig = {
     PRODUCTION_CONTRACT_ADDRESS: "0xe4A32717d411395A983d0ba1b56B552a3564402e",
     RPC_URL: "https://mainnet.base.org",
     PROCHAIN_URL: "https://prochain.network",
+    BLOCK_EXPLORER_URL: "https://basescan.org",
 };
 
 export default config;

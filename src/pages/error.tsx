@@ -1,5 +1,7 @@
 import {Tlt} from "@clairejs/react";
 
+import {useLookupUrl} from "../hooks/use-lookup-url";
+
 //-- Where the backend's code resolver sends a visitor whose code matched more than one lot.
 //--
 //-- Entity short names are unique per tenant, not globally, so two companies may each hold one —
@@ -11,33 +13,20 @@ import {Tlt} from "@clairejs/react";
 //-- message says the problem is on our side and points at the one thing the visitor can act on:
 //-- the full link, which carries the uuid and is never ambiguous.
 export default function ErrorPage() {
+  const lookupUrl = useLookupUrl();
+
   return (
-    <div className="landing-page" style={{width: "100%"}}>
-      <div
-        className="landing-page-content"
-        style={{minHeight: "100vh", justifyContent: "center"}}
-      >
-        <div
-          className="flex flex-col items-center justify-center"
-          style={{gap: 21, padding: 24}}
-        >
-          <span
-            className="font-bold"
-            style={{fontSize: 24, color: "var(--lp-text-heading)"}}
-          >
-            <Tlt template="Batch Code Not Unique" />
-          </span>
-          <span
-            style={{
-              fontSize: 14,
-              color: "var(--lp-text-muted)",
-              textAlign: "center",
-              maxWidth: 420,
-            }}
-          >
-            <Tlt template="That code matches more than one batch, so we cannot tell which one you mean. Use the full batch link, or ask the producer for it." />
-          </span>
-        </div>
+    <div className="landing-page">
+      <div className="state">
+        <h1 className="h-3">
+          <Tlt template="Batch Code Not Unique" />
+        </h1>
+        <p className="muted">
+          <Tlt template="That code matches more than one batch, so we cannot tell which one you mean. Use the full batch link, or ask the producer for it." />
+        </p>
+        <a className="btn btn-primary btn-sm" href={lookupUrl}>
+          <Tlt template="Look up another code" />
+        </a>
       </div>
     </div>
   );

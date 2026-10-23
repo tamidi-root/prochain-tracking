@@ -127,7 +127,7 @@ export default function EntityProductsPage() {
       <div className="landing-page-content" style={{minHeight: "100vh"}}>
         <SectionWrapper
           mini={mini}
-          padding={mini ? "24px 24px 0" : "32px max(40px, calc((100% - 1120px) / 2 + 40px)) 0"}
+          padding="32px 0 0"
         >
           <Link className="button compact" to={`/e/${entityAddress}`} style={{display: "inline-flex", alignItems: "center", gap: 4}}>
             <ChevronLeft size={16} />
@@ -136,18 +136,18 @@ export default function EntityProductsPage() {
         </SectionWrapper>
 
         {/* Entity header */}
-        <SectionWrapper mini={mini} padding={mini ? "20px 24px" : "28px max(40px, calc((100% - 1120px) / 2 + 40px))"}>
+        <SectionWrapper mini={mini} padding="28px 0">
           <div
             className="flex flex-row items-center"
             style={{
               gap: 16,
               padding: mini ? 16 : 20,
-              borderRadius: 16,
+              borderRadius: "var(--radius)",
               background: "var(--lp-glass-bg)",
               border: "1px solid var(--lp-glass-border)",
             }}
           >
-            <ImageWithFallback uri={entity.photo_url || entity.banner_image} width={48} style={{borderRadius: 12, flexShrink: 0}} />
+            <ImageWithFallback uri={entity.photo_url || entity.banner_image} width={48} style={{borderRadius: "var(--radius)", flexShrink: 0}} />
             <div className="flex flex-col" style={{gap: 4}}>
               <div className="flex flex-row items-center" style={{gap: 8}}>
                 <span className="font-semibold" style={{fontSize: 16, color: "var(--lp-text-heading)"}}>{entity.name}</span>
@@ -173,7 +173,7 @@ export default function EntityProductsPage() {
                 style={{
                   gap: 13,
                   padding: "48px 24px",
-                  borderRadius: 16,
+                  borderRadius: "var(--radius)",
                   background: "var(--lp-glass-bg)",
                   border: "1px solid var(--lp-glass-border)",
                 }}
@@ -194,7 +194,7 @@ export default function EntityProductsPage() {
                       alignItems: "center",
                       gap: mini ? 16 : 21,
                       padding: mini ? 12 : 16,
-                      borderRadius: 16,
+                      borderRadius: "var(--radius)",
                       background: "var(--lp-glass-bg)",
                       border: "1px solid var(--lp-glass-border)",
                       textDecoration: "none",
@@ -205,7 +205,7 @@ export default function EntityProductsPage() {
                       style={{
                         width: mini ? 56 : 64,
                         height: mini ? 56 : 64,
-                        borderRadius: 12,
+                        borderRadius: "var(--radius)",
                         overflow: "hidden",
                         backgroundColor: "#ffffff",
                         flexShrink: 0,
@@ -252,7 +252,7 @@ export default function EntityProductsPage() {
         </SectionWrapper>
 
         <div style={{flex: 1}} />
-        <ProfileFooter mini={mini} />
+        <ProfileFooter />
       </div>
     </div>
   );

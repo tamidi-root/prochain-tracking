@@ -3,6 +3,7 @@ import { getSystemLocale } from "@clairejs/core";
 import { Outlet } from "@clairejs/react-web";
 import { useEffect } from "react";
 
+import { SiteHeader } from "./pages/tracking/shared";
 import { ThemeProvider } from "./providers/theme";
 import { useTheme } from "./providers/theme";
 import { LANG_STORAGE_KEY, langs, useInject, useSetLanguage } from "./helpers/language";
@@ -36,6 +37,7 @@ function AppShell() {
     useLoadLanguages();
     return (
         <div className="app-shell">
+            <SiteHeader />
             <Outlet />
         </div>
     );

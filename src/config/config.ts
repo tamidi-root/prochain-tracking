@@ -7,6 +7,8 @@ export interface TrackingConfig {
     PRODUCTION_CONTRACT_ADDRESS: string;
     RPC_URL: string;
     PROCHAIN_URL: string;
+    //-- Basescan origin for the chain the contracts above live on; links the on-chain proof.
+    BLOCK_EXPLORER_URL: string;
 }
 
 const configs: Record<string, TrackingConfig> = { local, staging, production };

@@ -1,5 +1,7 @@
 import {Tlt} from "@clairejs/react";
 
+import {useLookupUrl} from "../hooks/use-lookup-url";
+
 //-- Where the backend's code resolver sends a visitor whose code matched no lot.
 //--
 //-- The redirect endpoint cannot render anything itself, and bouncing someone to a raw API error
@@ -10,33 +12,20 @@ import {Tlt} from "@clairejs/react";
 //-- Distinct from the empty state at /p, which reads "Tracking ID required" — that is the message
 //-- for arriving with no code at all, not for one that did not resolve.
 export default function NotFoundPage() {
+  const lookupUrl = useLookupUrl();
+
   return (
-    <div className="landing-page" style={{width: "100%"}}>
-      <div
-        className="landing-page-content"
-        style={{minHeight: "100vh", justifyContent: "center"}}
-      >
-        <div
-          className="flex flex-col items-center justify-center"
-          style={{gap: 21, padding: 24}}
-        >
-          <span
-            className="font-bold"
-            style={{fontSize: 24, color: "var(--lp-text-heading)"}}
-          >
-            <Tlt template="Batch Code Not Found" />
-          </span>
-          <span
-            style={{
-              fontSize: 14,
-              color: "var(--lp-text-muted)",
-              textAlign: "center",
-              maxWidth: 420,
-            }}
-          >
-            <Tlt template="No batch matches that code." />
-          </span>
-        </div>
+    <div className="landing-page">
+      <div className="state">
+        <h1 className="h-3">
+          <Tlt template="Batch Code Not Found" />
+        </h1>
+        <p className="muted">
+          <Tlt template="No batch matches that code." />
+        </p>
+        <a className="btn btn-primary btn-sm" href={lookupUrl}>
+          <Tlt template="Look up another code" />
+        </a>
       </div>
     </div>
   );

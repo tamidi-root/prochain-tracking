@@ -14,3 +14,5 @@ export const isRichTextEmpty = (value?: string | null) => {
     const stripped = value.replace(/<[^>]*>/g, "").replace(/&nbsp;/g, " ").trim();
     return stripped.length === 0;
 };
+
+export const shortAddress = (address: string) => `${address.slice(0, 6)}…${address.slice(-4)}`;

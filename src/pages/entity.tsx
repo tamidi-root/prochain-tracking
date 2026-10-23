@@ -112,14 +112,8 @@ export default function EntityPage() {
       <div className="landing-page-content" style={{minHeight: "100vh"}}>
         {/* Banner image */}
         {entity.banner_image && (
-          <div
-            style={{
-              width: "100%",
-              boxSizing: "border-box",
-              padding: mini ? "0 24px" : "0 max(40px, calc((100% - 1120px) / 2 + 40px))",
-            }}
-          >
-            <div style={{borderRadius: 16, overflow: "hidden"}}>
+          <div className="wrap" style={{paddingTop: 32}}>
+            <div style={{borderRadius: "var(--radius)", overflow: "hidden"}}>
               <img
                 src={entity.banner_image}
                 style={{width: "100%", maxHeight: 300, objectFit: "cover", display: "block"}}
@@ -132,14 +126,14 @@ export default function EntityPage() {
         {/* Entity header */}
         <SectionWrapper
           mini={mini}
-          padding={mini ? "32px 24px" : "40px max(40px, calc((100% - 1120px) / 2 + 40px))"}
+          padding="40px 0"
         >
           <div
             className={`flex ${mini ? "flex-col" : "flex-row"} items-start`}
             style={{
               gap: mini ? 24 : 32,
               padding: mini ? 20 : 28,
-              borderRadius: 20,
+              borderRadius: "var(--radius)",
               background: "var(--lp-glass-bg)",
               border: "1px solid var(--lp-glass-border)",
             }}
@@ -147,7 +141,7 @@ export default function EntityPage() {
             <ImageWithFallback
               uri={entity.photo_url || entity.banner_image}
               width={mini ? 120 : 160}
-              style={{borderRadius: 20, flexShrink: 0}}
+              style={{borderRadius: "var(--radius)", flexShrink: 0}}
             />
             <div className="flex flex-col flex-1" style={{gap: 14}}>
               <div className="flex flex-col" style={{gap: 6}}>
@@ -170,7 +164,7 @@ export default function EntityPage() {
                 <div
                   style={{
                     padding: 18,
-                    borderRadius: 16,
+                    borderRadius: "var(--radius)",
                     background: "rgba(127, 127, 127, 0.08)",
                     border: "1px solid var(--lp-glass-border)",
                   }}
@@ -203,7 +197,7 @@ export default function EntityPage() {
             <div
               className="flex flex-col"
               style={{
-                borderRadius: 16,
+                borderRadius: "var(--radius)",
                 background: "var(--lp-glass-bg)",
                 border: "1px solid var(--lp-glass-border)",
                 overflow: "hidden",
@@ -270,7 +264,7 @@ export default function EntityPage() {
                   >
                     <div
                       style={{
-                        borderRadius: 16,
+                        borderRadius: "var(--radius)",
                         overflow: "hidden",
                         background: "var(--lp-glass-bg)",
                         border: "1px solid var(--lp-glass-border)",
@@ -301,7 +295,7 @@ export default function EntityPage() {
         )}
 
         <div style={{flex: 1}} />
-        <ProfileFooter mini={mini} />
+        <ProfileFooter />
       </div>
     </div>
   );

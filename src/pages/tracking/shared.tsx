@@ -1,33 +1,64 @@
 import {Tlt} from "@clairejs/react";
 import {Monitor, Moon, Sun} from "lucide-react";
-import logoSvg from "../../assets/logo.svg";
+import type {ReactNode} from "react";
+
 import {LangSwitcher} from "../../components/lang-switcher";
+import {useLookupUrl} from "../../hooks/use-lookup-url";
 import {config} from "../../config/config";
 import {useTheme} from "../../providers/theme";
 
 export function SectionWrapper({
   children,
-  mini,
   padding,
 }: {
   children: React.ReactNode;
-  mini: boolean;
+  mini?: boolean;
   padding?: string;
 }) {
   return (
-    <div
-      style={{
-        width: "100%",
-        boxSizing: "border-box",
-        padding:
-          padding ||
-          (mini
-            ? "0 24px 24px"
-            : "0 max(40px, calc((100% - 1120px) / 2 + 40px)) 32px"),
-      }}
-    >
+    <div className="wrap" style={{padding: padding || "0 0 32px"}}>
       {children}
     </div>
+  );
+}
+
+//-- One titled band of the lot page, laid out like the reference design at prochain.network/tra-cuu/demo:
+//-- the eyebrow sits in a narrow left column, the content in the wide right one, bands split by hairlines.
+export function Part({label, children}: {label: ReactNode; children: ReactNode}) {
+  return (
+    <section className="grid part">
+      <div className="col-4">
+        <p className="eyebrow">{label}</p>
+      </div>
+      <div className="col-8">{children}</div>
+    </section>
+  );
+}
+
+//-- The marketing site's mark and wordmark (web-ui pages/site/components/logo.tsx), inlined because this
+//-- repo imports no application code from the monorepo.
+export function Logo({size = 22}: {size?: number}) {
+  return (
+    <span className="logo" style={{fontSize: size * 0.95}}>
+      <svg
+        viewBox="0 0 24 24"
+        width={size}
+        height={size}
+        aria-hidden="true"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2.4"
+        strokeLinecap="round"
+      >
+        <path d="M4 18 L12 6" />
+        <path d="M9 18 L17 6" />
+        <path d="M14 18 L22 6" opacity=".45" />
+      </svg>
+      <span>
+        pro<b>Chain</b>
+        <sup>®</sup>
+      </span>
+    </span>
   );
 }
 
@@ -38,62 +69,46 @@ function ThemeSwitcher() {
 
   return (
     <button
-      className="button"
+      className="button compact"
       onClick={toggleTheme}
       title={themeMode || "auto"}
       type="button"
     >
-      <Icon size={16} style={{color: "var(--lp-btn-text)", display: "block"}} />
+      <Icon size={16} style={{display: "block"}} />
     </button>
   );
 }
 
-export function ProfileFooter({mini}: {mini: boolean}) {
-  const {isDarkMode} = useTheme();
-  const sidePadding = mini
-    ? "24px"
-    : "max(40px, calc((100% - 1120px) / 2 + 40px))";
+export function SiteHeader() {
+  const lookupUrl = useLookupUrl();
+
   return (
-    <div
-      className="footer-section"
-      style={{
-        flexWrap: "nowrap",
-        alignItems: "center",
-        padding: `24px ${sidePadding}`,
-      }}
-    >
-      <div
-        className="left logo-and-name"
-        style={{flexWrap: "nowrap", alignItems: "center"}}
-      >
-        <a
-          href={config.PROCHAIN_URL}
-          target="_blank"
-          rel="noreferrer"
-          className="logo"
-          style={{textDecoration: "none"}}
-        >
-          <img
-            alt="proChain"
-            src={logoSvg}
-            style={{
-              width: 20,
-              height: 20,
-              filter: isDarkMode ? "brightness(0) invert(1)" : "brightness(0)",
-            }}
-          />
-          <div className="copyright">
-            <Tlt
-              template="Powered by {brand}"
-              data={{brand: "prochain.network"}}
-            />
-          </div>
+    <header className="site-header">
+      <div className="wrap bar">
+        <a href={config.PROCHAIN_URL} className="brand" aria-label="proChain">
+          <Logo />
         </a>
+        <div className="actions">
+          <a href={lookupUrl} className="lookup-link">
+            <Tlt template="Look up another code" />
+          </a>
+          <LangSwitcher />
+          <ThemeSwitcher />
+        </div>
       </div>
-      <div className="flex flex-row items-center" style={{gap: 13}}>
-        <LangSwitcher dropUp />
-        <ThemeSwitcher />
-      </div>
-    </div>
+    </header>
+  );
+}
+
+export function ProfileFooter() {
+  return (
+    <footer className="wrap site-footer">
+      <p className="faint small">
+        <Tlt template="Powered by {brand}" data={{brand: "proChain"}} /> ·{" "}
+        <a href={config.PROCHAIN_URL}>
+          <Tlt template="Create a record for your own product" /> →
+        </a>
+      </p>
+    </footer>
   );
 }

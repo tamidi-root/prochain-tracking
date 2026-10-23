@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.2.1](https://github.com/tamidi-root/prochain-tracking/compare/v1.2.0...v1.2.1) (2026-10-23)
+
+
+### Bug Fixes
+
+* render measure standards and multiline details in their value format ([7a577a8](https://github.com/tamidi-root/prochain-tracking/commit/7a577a83d6f26f0cc4394fd9cf30c35bb640c4aa))
+* render measure standards and multiline details in their value format ([546f1f7](https://github.com/tamidi-root/prochain-tracking/commit/546f1f7a5f36e13b4f7c5c7671c8c5b1407f3ac3))
+
 ## [1.2.0](https://github.com/tamidi-root/prochain-tracking/compare/v1.1.0...v1.2.0) (2026-10-23)
 
 

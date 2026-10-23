@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.2.0](https://github.com/tamidi-root/prochain-tracking/compare/v1.1.0...v1.2.0) (2026-10-23)
+
+
+### Features
+
+* add the error page for an ambiguous batch code ([cc04ad7](https://github.com/tamidi-root/prochain-tracking/commit/cc04ad766b67711693b344dd9db81bc4e89b176d))
+* add the error page for an ambiguous batch code ([9fa3265](https://github.com/tamidi-root/prochain-tracking/commit/9fa32650df1402360e36bc359c38c26727a4b374))
+* adopt the prochain.network design tokens and the /tra-cuu/demo lot layout ([9fef275](https://github.com/tamidi-root/prochain-tracking/commit/9fef275887c6e7084fab577133d60ed2d1611c92))
+* use the proChain logo mark as the favicon ([7a0b39a](https://github.com/tamidi-root/prochain-tracking/commit/7a0b39a60fff1c2e3127378ed9effc78e6e31ea5))
+
 ## [1.1.0](https://github.com/tamidi-root/prochain-tracking/compare/v1.0.2...v1.1.0) (2026-09-20)
 
 

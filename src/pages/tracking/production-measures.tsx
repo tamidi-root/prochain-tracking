@@ -45,7 +45,15 @@ export function TrackingMeasures({ properties, trackings }: Props) {
                                 <td className={valueType === ValueType.number ? "num" : undefined}>
                                     <ValueTypeDisplay value={tracking?.value || ""} valueType={valueType} />
                                 </td>
-                                <td className="muted">{property.standard || "—"}</td>
+                                {/*-- The standard is stored in the property's own value format (a JSON file list for
+                                      attachments, a JSON array for lists), so it renders the same way as the result. */}
+                                <td className="muted">
+                                    {property.standard ? (
+                                        <ValueTypeDisplay value={property.standard} valueType={valueType} />
+                                    ) : (
+                                        "—"
+                                    )}
+                                </td>
                             </tr>
                         );
                     })}

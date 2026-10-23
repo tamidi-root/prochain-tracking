@@ -1,4 +1,5 @@
 import { Tlt } from "@clairejs/react";
+import { FileText } from "lucide-react";
 import { useMemo } from "react";
 
 import { ValueType } from "../types/tracking";
@@ -73,16 +74,26 @@ export function ValueTypeDisplay({ value, valueType = ValueType.text }: Props) {
     }
 
     if (valueType === ValueType.attachment_urls) {
-        const files = value ? (JSON.parse(value) as { url: string; name: string }[]) : [];
+        let files: { url: string; name: string }[] = [];
+        try {
+            files = value ? JSON.parse(value) : [];
+        } catch {
+            //-- Not a file list after all: fall through to showing nothing rather than crashing the page.
+        }
         return (
             <div className="flex flex-col" style={{ gap: 8 }}>
                 {files.map((file) => (
-                    <a key={file.url} href={file.url} rel="noreferrer" target="_blank">
-                        {file.name}
+                    <a key={file.url} className="file-link" href={file.url} rel="noreferrer" target="_blank">
+                        <FileText size={16} aria-hidden="true" />
+                        <span>{file.name || file.url.split("/").pop()}</span>
                     </a>
                 ))}
             </div>
         );
+    }
+
+    if (valueType === ValueType.multiline) {
+        return <span style={{ whiteSpace: "pre-line" }}>{value || "---"}</span>;
     }
 
     return <span>{value || "---"}</span>;

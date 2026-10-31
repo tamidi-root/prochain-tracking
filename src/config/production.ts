@@ -6,6 +6,7 @@ const config: TrackingConfig = {
     RPC_URL: "https://mainnet.base.org",
     PROCHAIN_URL: "https://prochain.network",
     BLOCK_EXPLORER_URL: "https://basescan.org",
+    INDEXER_URL: "https://indexer.dev.hyperindex.xyz/979e61b/v1/graphql",
 };
 
 export default config;

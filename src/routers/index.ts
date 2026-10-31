@@ -8,6 +8,7 @@ const importDelay = _importDelay as <T extends ComponentType<object>>(
   promise: Promise<{default: T}>,
 ) => () => Promise<{default: T}>;
 
+const ExplorerPage = lazy(importDelay(import("../pages/explorer")));
 const TrackingPage = lazy(importDelay(import("../pages/tracking")));
 const EntityPage = lazy(importDelay(import("../pages/entity")));
 const EntityProductsPage = lazy(importDelay(import("../pages/entity-products")));
@@ -19,6 +20,8 @@ const routes: RouterConfig = {
   path: "",
   component: {view: Root},
   children: [
+    //-- The site root lists every production on Base, newest first.
+    {path: "", component: {view: ExplorerPage}},
     {path: "p/:uuid", component: {view: TrackingPage}},
     {path: "e/:uuid", component: {view: EntityPage}},
     {path: "e/:uuid/products", component: {view: EntityProductsPage}},

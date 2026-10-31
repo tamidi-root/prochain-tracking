@@ -1,9 +1,8 @@
 import { config } from "../config/config";
 
-//-- The explorer only ever shows Base mainnet. There is no staging tracking site, and the indexer
-//-- also carries Base Sepolia, so every query pins the chain explicitly.
-export const EXPLORER_CHAIN_ID = 8453;
-export const EXPLORER_BLOCK_EXPLORER_URL = "https://basescan.org";
+//-- The indexer carries both Base mainnet and Base Sepolia, so every query pins this environment's chain.
+export const EXPLORER_CHAIN_ID = config.CHAIN_ID;
+export const EXPLORER_BLOCK_EXPLORER_URL = config.BLOCK_EXPLORER_URL;
 
 const SECONDS_PER_DAY = 86400;
 

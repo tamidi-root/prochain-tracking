@@ -3,7 +3,6 @@ import {Monitor, Moon, Sun} from "lucide-react";
 import type {ReactNode} from "react";
 
 import {LangSwitcher} from "../../components/lang-switcher";
-import {useLookupUrl} from "../../hooks/use-lookup-url";
 import {config} from "../../config/config";
 import {useTheme} from "../../providers/theme";
 
@@ -80,7 +79,6 @@ function ThemeSwitcher() {
 }
 
 export function SiteHeader() {
-  const lookupUrl = useLookupUrl();
 
   return (
     <header className="site-header">
@@ -89,9 +87,6 @@ export function SiteHeader() {
           <Logo />
         </a>
         <div className="actions">
-          <a href={lookupUrl} className="lookup-link">
-            <Tlt template="Look up another code" />
-          </a>
           <LangSwitcher />
           <ThemeSwitcher />
         </div>

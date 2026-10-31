@@ -3,13 +3,15 @@ import staging from "./staging";
 import production from "./production";
 
 export interface TrackingConfig {
+    //-- Base chain the contracts and the explorer read: 8453 (mainnet) or 84532 (Sepolia, staging).
+    CHAIN_ID: number;
     ENTITY_CONTRACT_ADDRESS: string;
     PRODUCTION_CONTRACT_ADDRESS: string;
     RPC_URL: string;
     PROCHAIN_URL: string;
     //-- Basescan origin for the chain the contracts above live on; links the on-chain proof.
     BLOCK_EXPLORER_URL: string;
-    //-- Envio indexer GraphQL endpoint. The explorer reads Base mainnet from it in every environment.
+    //-- Envio indexer GraphQL endpoint. It indexes both Base chains; queries filter by CHAIN_ID.
     INDEXER_URL: string;
 }
 

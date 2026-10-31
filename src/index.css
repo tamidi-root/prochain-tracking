@@ -748,20 +748,6 @@ p {
     font-size: 14px;
 }
 
-.site-header .lookup-link {
-    color: var(--ink-2);
-}
-
-.site-header .lookup-link:hover {
-    color: var(--ink);
-}
-
-@media (max-width: 600px) {
-    .site-header .lookup-link {
-        display: none;
-    }
-}
-
 /* Pages sit under the 64px header; keep a short page's footer on the first screen. */
 .app-shell .landing-page,
 .app-shell .landing-page-content {

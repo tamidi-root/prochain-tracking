@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.4.0](https://github.com/tamidi-root/prochain-tracking/compare/v1.3.0...v1.4.0) (2026-10-31)
+
+
+### Features
+
+* Base Sepolia on staging, drop the header lookup link ([cc1857e](https://github.com/tamidi-root/prochain-tracking/commit/cc1857ee5260bc2412cc0c61d0c442377258c010))
+* read Base Sepolia on staging and drop the header lookup link ([790a5a2](https://github.com/tamidi-root/prochain-tracking/commit/790a5a2870b1d0260c2cace7232a5ea987a43b26))
+
 ## [1.3.0](https://github.com/tamidi-root/prochain-tracking/compare/v1.2.1...v1.3.0) (2026-10-31)
 
 
